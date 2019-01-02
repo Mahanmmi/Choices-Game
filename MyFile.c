@@ -50,7 +50,7 @@ struct Node *Load_Game(int *chance_sum, int *people, int *court, int *treasury) 
 
     return list;
 }
-
+//
 void Save_Game(struct Node *list, int chance_sum, int people, int court, int treasury) {
     FILE *fout = fopen("..\\save.bin", "wb");
 
