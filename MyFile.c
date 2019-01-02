@@ -9,6 +9,14 @@
 
 #define DEBUG
 
+struct Node *Start_New_Game(int *chance_sum, int *people, int *court, int *treasury) {
+    *people = 50;
+    *court = 50;
+    *treasury = 50;
+    struct Node *list = Create_List(chance_sum);
+    return list;
+}
+
 FILE *Open_In_File(char *name) {
     FILE *fp;
     char *prefix = "..\\";
@@ -37,24 +45,39 @@ struct Problem_Unit Scan_In_Problem(FILE *fp, int *chance_sum) {
     return tmp;
 }
 
-struct Node *Load_Game(int *chance_sum, int *people, int *court, int *treasury) {
+struct Node *Load_Game(int *chance_sum, int *people, int *court, int *treasury,char * name) {
     FILE * fload = fopen("..\\save.bin", "rb");
-    struct Node *list = Load_list(&fload);
 
-    fread(chance_sum, sizeof(int), 1, fload);
-    fread(people, sizeof(int), 1, fload);
-    fread(court, sizeof(int), 1, fload);
-    fread(treasury, sizeof(int), 1, fload);
-
-    fclose(fload);
+    int is_end;
+    fread(&is_end, sizeof(int), 1, fload);
+    int k;
+    fread(&k, sizeof(int), 1, fload);
+    fread(name, sizeof(char), k, fload);
+    struct Node *list;
+    if(is_end == 0) {
+        list = Load_list(&fload);
+        fread(chance_sum, sizeof(int), 1, fload);
+        fread(people, sizeof(int), 1, fload);
+        fread(court, sizeof(int), 1, fload);
+        fread(treasury, sizeof(int), 1, fload);
+        fclose(fload);
+    } else {
+        list = Start_New_Game(chance_sum,people,court,treasury);
+    }
 
     return list;
 }
 //
-void Save_Game(struct Node *list, int chance_sum, int people, int court, int treasury) {
+void Save_Game(struct Node *list, int chance_sum, int people, int court, int treasury, char * name, int is_end) {
     FILE *fout = fopen("..\\save.bin", "wb");
 
-    int n =Node_Counter(list);
+    fwrite(&is_end, sizeof(int), 1, fout);
+
+    int k = strlen(name);
+    fwrite(&k, sizeof(int), 1, fout);
+    fwrite(name, sizeof(char), k, fout);
+
+    int n = Node_Counter(list);
     fwrite(&n, sizeof(int), 1, fout);
 
     for (struct Node *current = list; current != NULL; current = current->next) {

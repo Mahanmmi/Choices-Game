@@ -38,7 +38,6 @@ int Node_Counter(struct Node *list) {
 struct Node *Random_Node_Finder(int *chance_sum, struct Node *list) {
     srand(time(NULL));
     int random_counter = rand() % (*chance_sum);
-
     struct Node *current = list;
     while (1) {
         random_counter -= (current->data).chance;
@@ -80,7 +79,7 @@ void Print_List(struct Node *list) {
 struct Node *Create_List(int *chance_sum) {
     struct Node *list = NULL, *current = NULL;
     int n = 1;
-
+    *chance_sum = 0;
     FILE *Mother_File = Open_In_File("CHOICES.txt");
     if (Mother_File == NULL) {
         printf("Error Problem file not found\n");

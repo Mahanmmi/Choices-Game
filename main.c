@@ -1,5 +1,6 @@
 #include "MyLinkedList.h"
 #include "MyFile.h"
+#include <stdbool.h>
 
 int People, Court, Treasury;
 
@@ -36,24 +37,96 @@ int initialize_game() {
     }
 }
 
-struct Node *Start_New_Game(int *chance_sum) {
-    People = 50;
-    Court = 50;
-    Treasury = 50;
-    struct Node *list = Create_List(chance_sum);
-    return list;
+bool check_end(){
+    if (People <= 0 || Court <= 0 || Treasury <= 0)
+        return 1;
+    if (((People + Court + Treasury) / 3) < 10)
+        return 1;
+    return 0;
 }
 
+void print_resources(){
+    printf("People: %d Court: %d Treasury: %d\n",People,Court,Treasury);
+}
+
+void Game(struct Node *list, int *chance_sum, char *name) {
+    print_resources();
+    while (1) {
+
+        if (list == NULL) {
+            list = Create_List(chance_sum);
+        }
+
+        struct Node *rnd = Random_Node_Finder(chance_sum, list);
+        struct Problem_Unit data = rnd->data;
+        printf("%s", data.problem);
+        printf("<<<< %s", data.choice1);
+        printf(">>>> %s ", data.choice2);
+        char op;
+        scanf(" %c", &op);
+        while (1) {
+            if (op == '<') {
+                People += data.people1;
+                Court += data.court1;
+                Treasury += data.treasury1;
+                break;
+            } else if (op == '>') {
+                People += data.people2;
+                Court += data.court2;
+                Treasury += data.treasury2;
+                break;
+            } else if (op == 'p') {
+                printf("Game paused\n Save and exit? (Y/N)");
+                while (1) {
+                    char save;
+                    scanf(" %c", &save);
+                    if (save == 'Y') {
+                        Save_Game(list, *chance_sum, People, Court, Treasury, name, 0);
+                        exit(0);
+                    } else if (save == 'N') {
+                        break;
+                    } else {
+                        printf("Error invalid input (Enter Y / N)\n");
+                    }
+
+                }
+            } else {
+                printf("Error invalid input (Enter < / > / p)\n");
+            }
+        }
+        print_resources();
+        if (check_end()) {
+            printf("Game is over too bad :(\n Do you want to save? (Y/N)");
+            while (1) {
+                char save;
+                scanf("%c", &save);
+                if (save == 'Y') {
+                    Save_Game(list, *chance_sum, People, Court, Treasury, name, 1);
+                    exit(0);
+                } else if (save == 'N') {
+                    exit(0);
+                } else {
+                    printf("Error invalid input (Enter Y / N)\n");
+                }
+            }
+        }
+
+    }
+}
 
 int main() {
 
     printf("\t\tWelcome to great game of decisions\n");
+    printf("Enter your name : ");
+    char name[50];
+    scanf("%s", name);
     int mode = initialize_game();
-    int chance_sum;
+    int chance_sum = 0;
+
     struct Node *list;
     while (1) {
         if (mode == 1) {
-            list = Start_New_Game(&chance_sum);
+            list = Start_New_Game(&chance_sum,&People,&Court,&Treasury);
             break;
         } else if (mode == 2) {
             FILE *fp = fopen("..\\save.bin", "rb");
@@ -62,40 +135,12 @@ int main() {
                 mode = initialize_game();
                 fclose(fp);
             } else {
-                list = Load_Game(&chance_sum, &People, &Court, &Treasury);
+                list = Load_Game(&chance_sum, &People, &Court, &Treasury, name);
                 fclose(fp);
                 break;
             }
         }
     }
-//
-
-
-
-
-
-
-
-
-    /*
-    int chance_sum = 0;
-    struct Node *list = Create_List(&chance_sum);
-    Print_List(list);
-    printf("%d\n", chance_sum);
-
-
-    while (chance_sum > 5) {
-        struct Node *rnd_node = Random_Node_Finder(&chance_sum, list);
-        struct Problem_Unit tmp = rnd_node->data;
-        Check_List(&list);
-        printf("Random : %s %d\n", (tmp.problem), (tmp.chance));
-    }
-
-
-    for (struct Node *current = list; current != NULL; current = current->next) {
-        struct Problem_Unit tmp = current->data;
-        printf("%s %d\n", (tmp.problem), (tmp.chance));
-    }
-*/
+    Game(list, &chance_sum, name);
     return 0;
 }
