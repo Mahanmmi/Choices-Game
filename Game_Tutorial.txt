@@ -1,0 +1,8 @@
+Lead an entire nation to salvation or destruction.
+With a simple choice in each problem, < or >, you’ll be able to decide of this Nation’s destiny,
+taking hard decisions about different quests and problems,
+that will be brought to your majesty attention.
+Be careful though: leading has never been easy and it will be even more challenging in a similar world.
+Try to maximize your key resources - People, Court, Treasury.
+You will start with 50% on each one you'll lose if any of them falls to 0 or average of them falls < 10.
+You pause and save game whenever you want by entering "p".

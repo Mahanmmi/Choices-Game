@@ -30,12 +30,16 @@ struct Node *Add_Node(struct Problem_Unit info);
 
 void Remove_Node(struct Node **list, struct Node *target);
 
+int Node_Counter(struct Node * list);
+
 struct Node *Random_Node_Finder(int *chance_sum, struct Node *list);
 
 void Check_List(struct Node **list);
 
 void Print_List(struct Node *list);
 
-struct Node *Create_List();
+struct Node *Create_List(int * chance_sum);
+
+struct Node *Load_list(FILE **fload);
 
 #endif //INTRO_PROGRAMMING_FINAL_PROJECT_MYLINKEDLIST_H
