@@ -52,7 +52,7 @@ struct Node *Load_Game(int *chance_sum, int *people, int *court, int *treasury,c
     fread(&is_end, sizeof(int), 1, fload);
     int k;
     fread(&k, sizeof(int), 1, fload);
-    fread(name, sizeof(char), k, fload);
+    fread(name, sizeof(char), k+1, fload);
     struct Node *list;
     if(is_end == 0) {
         list = Load_list(&fload);
@@ -75,7 +75,7 @@ void Save_Game(struct Node *list, int chance_sum, int people, int court, int tre
 
     int k = strlen(name);
     fwrite(&k, sizeof(int), 1, fout);
-    fwrite(name, sizeof(char), k, fout);
+    fwrite(name, sizeof(char), k+1, fout);
 
     int n = Node_Counter(list);
     fwrite(&n, sizeof(int), 1, fout);

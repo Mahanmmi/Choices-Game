@@ -37,7 +37,7 @@ int initialize_game() {
     }
 }
 
-bool check_end(){
+bool check_end() {
     if (People <= 0 || Court <= 0 || Treasury <= 0)
         return 1;
     if (((People + Court + Treasury) / 3) < 10)
@@ -45,8 +45,8 @@ bool check_end(){
     return 0;
 }
 
-void print_resources(){
-    printf("People: %d Court: %d Treasury: %d\n",People,Court,Treasury);
+void print_resources() {
+    printf("People: %d Court: %d Treasury: %d\n", People, Court, Treasury);
 }
 
 void Game(struct Node *list, int *chance_sum, char *name) {
@@ -62,9 +62,9 @@ void Game(struct Node *list, int *chance_sum, char *name) {
         printf("%s", data.problem);
         printf("<<<< %s", data.choice1);
         printf(">>>> %s ", data.choice2);
-        char op;
-        scanf(" %c", &op);
         while (1) {
+            char op;
+            scanf(" %c", &op);
             if (op == '<') {
                 People += data.people1;
                 Court += data.court1;
@@ -76,7 +76,7 @@ void Game(struct Node *list, int *chance_sum, char *name) {
                 Treasury += data.treasury2;
                 break;
             } else if (op == 'p') {
-                printf("Game paused\n Save and exit? (Y/N)");
+                printf("Game paused\n Save and exit? (Y/N)\n");
                 while (1) {
                     char save;
                     scanf(" %c", &save);
@@ -84,6 +84,7 @@ void Game(struct Node *list, int *chance_sum, char *name) {
                         Save_Game(list, *chance_sum, People, Court, Treasury, name, 0);
                         exit(0);
                     } else if (save == 'N') {
+                        printf("Game is resumed answer the problem or pause again ;)\n");
                         break;
                     } else {
                         printf("Error invalid input (Enter Y / N)\n");
@@ -117,16 +118,16 @@ void Game(struct Node *list, int *chance_sum, char *name) {
 int main() {
 
     printf("\t\tWelcome to great game of decisions\n");
-    printf("Enter your name : ");
     char name[50];
-    scanf("%s", name);
     int mode = initialize_game();
     int chance_sum = 0;
 
     struct Node *list;
     while (1) {
         if (mode == 1) {
-            list = Start_New_Game(&chance_sum,&People,&Court,&Treasury);
+            printf("Enter your name : ");
+            scanf("%s", name);
+            list = Start_New_Game(&chance_sum, &People, &Court, &Treasury);
             break;
         } else if (mode == 2) {
             FILE *fp = fopen("..\\save.bin", "rb");
@@ -136,6 +137,7 @@ int main() {
                 fclose(fp);
             } else {
                 list = Load_Game(&chance_sum, &People, &Court, &Treasury, name);
+                printf("Hello %s\n",name);
                 fclose(fp);
                 break;
             }
