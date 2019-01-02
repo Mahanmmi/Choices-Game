@@ -9,17 +9,13 @@
 
 #define DEBUG
 
-FILE *Open_In_File(int n) {
+FILE *Open_In_File(char * name) {
     FILE *fp;
-    char *prefix = "..\\c";
-    char number[10];
-    sprintf(number, "%d", n);
-    char *suffix = ".txt";
+    char *prefix = "..\\";
     char file_name[30];
     strcpy(file_name, "");
     strcat(file_name, prefix);
-    strcat(file_name, number);
-    strcat(file_name, suffix);
+    strcat(file_name, name);
 #ifdef DEBUG
     puts(file_name);
 #endif
@@ -36,5 +32,6 @@ struct Problem_Unit Scan_In_Problem(FILE *fp) {
     fgets(tmp.choice2, 200, fp);
     fscanf(fp, "%d%d%d", &tmp.people2, &tmp.court2, &tmp.treasury2);
     tmp.chance = 3;
+    fclose(fp);
     return tmp;
 }

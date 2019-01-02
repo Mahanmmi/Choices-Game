@@ -1,9 +1,9 @@
-A cirminal
-clean out
-10
+Soldiers in some part of empire are not doing so well. We could cut funds by reducing their numbers.
+Yes, reduce their numbers.
 -5
--15
-I don't care
--10
 0
-10
+5
+No, we need them.
+0
+0
+-10

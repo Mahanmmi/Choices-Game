@@ -8,7 +8,7 @@
 #include <stdio.h>
 
 
-FILE *Open_In_File(int n);
+FILE *Open_In_File(char * file_name);
 
 struct Problem_Unit Scan_In_Problem(FILE *fp);
 

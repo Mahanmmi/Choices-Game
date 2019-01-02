@@ -1,6 +1,14 @@
 cmake_minimum_required(VERSION 3.12)
-project(Intro_Programming_Final_Project C)
+project(Intro_Programming_Final_Project)
 
-set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Intro_Programming_Final_Project main.c MyLinkedList.c MyLinkedList.h MyFile.c MyFile.h)
+include_directories(.)
+
+add_executable(Intro_Programming_Final_Project
+        c1.txt
+        main.c
+        MyFile.c
+        MyFile.h
+        MyLinkedList.c
+        MyLinkedList.h)

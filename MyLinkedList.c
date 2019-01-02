@@ -74,8 +74,20 @@ void Print_List(struct Node *list){
 struct Node *Create_List() {
     struct Node *list = NULL, *current = NULL;
     int n = 1;
+
+    FILE *Mother_File = Open_In_File("CHOICES.txt");
+    if(Mother_File == NULL){
+        printf("Error Problem file not found\n");
+        exit(-1);
+    }
+
     while (1) {
-        FILE *fp = Open_In_File(n);
+        char file_name[20];
+        if(feof(Mother_File))
+            break;
+        fscanf(Mother_File,"%s",file_name);
+
+        FILE *fp = Open_In_File(file_name);
         if (fp == NULL)
             break;
         struct Problem_Unit tmp;
@@ -89,5 +101,7 @@ struct Node *Create_List() {
         }
         n++;
     }
+    fclose(Mother_File);
+
     return list;
 }
