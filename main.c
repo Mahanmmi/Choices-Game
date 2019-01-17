@@ -1,5 +1,6 @@
 #include "MyLinkedList.h"
 #include "MyFile.h"
+#include "ProblemCreator.h"
 #include <stdbool.h>
 
 int People, Court, Treasury;
@@ -136,33 +137,57 @@ void Game(struct Node *list, int *chance_sum, char *name) {
 }
 
 int main() {
-
-    printf("\t\tWelcome to great game of decisions\n");
-    char name[50];
-    int mode = initialize_game();
-    int chance_sum = 0;
-
-    struct Node *list;
-    while (1) {
-        if (mode == 1) {
-            printf("Enter your name : ");
-            scanf("%s", name);
-            list = Start_New_Game(&chance_sum, &People, &Court, &Treasury);
+    printf("\t\tWhat do you want to do?\n");
+    char operation;
+    do {
+        printf("\t\t1: Play\n");
+        printf("\t\t2: Add problems\n");
+        fflush(stdin);
+        scanf(" %c", &operation);
+        if(operation == '1' || operation == '2')
             break;
-        } else if (mode == 2) {
-            FILE *fp = fopen("..\\save.bin", "rb");
-            if (fp == NULL) {
-                printf("You have no saved game");
-                mode = initialize_game();
-                fclose(fp);
-            } else {
-                list = Load_Game(&chance_sum, &People, &Court, &Treasury, name);
-                printf("Hello %s\n",name);
-                fclose(fp);
+        printf("Error invalid input!\n");
+    }while (1);
+    if(operation == '1') {
+        printf("\t\tWelcome to great game of decisions\n");
+        char name[50];
+        int mode = initialize_game();
+        int chance_sum = 0;
+
+        struct Node *list;
+        while (1) {
+            if (mode == 1) {
+                printf("Enter your name : ");
+                scanf("%s", name);
+                list = Start_New_Game(&chance_sum, &People, &Court, &Treasury);
                 break;
+            } else if (mode == 2) {
+                FILE *fp = fopen("..\\save.bin", "rb");
+                if (fp == NULL) {
+                    printf("You have no saved game");
+                    mode = initialize_game();
+                    fclose(fp);
+                } else {
+                    list = Load_Game(&chance_sum, &People, &Court, &Treasury, name);
+                    printf("Hello %s\n", name);
+                    fclose(fp);
+                    break;
+                }
             }
         }
+        Game(list, &chance_sum, name);
     }
-    Game(list, &chance_sum, name);
+    if(operation == '2'){
+        int n;
+        printf("How many problem do you want to add?\n");
+        fflush(stdin);
+        scanf("%d",&n);
+        for(int i=0;i<n;i++) {
+            char p_name[200] = "";
+            printf("Getting problem #%d\n",i+1);
+            struct Problem_Unit temp = get_problem(p_name);
+            add_problem(temp, p_name);
+        }
+    }
     return 0;
 }

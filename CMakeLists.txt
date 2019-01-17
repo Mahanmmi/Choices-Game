@@ -11,4 +11,4 @@ add_executable(Intro_Programming_Final_Project
         MyFile.c
         MyFile.h
         MyLinkedList.c
-        MyLinkedList.h)
+        MyLinkedList.h ProblemCreator.c ProblemCreator.h)

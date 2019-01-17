@@ -176,6 +176,33 @@ MyLinkedList.c.s:
 	$(MAKE) -f CMakeFiles\Intro_Programming_Final_Project.dir\build.make CMakeFiles/Intro_Programming_Final_Project.dir/MyLinkedList.c.s
 .PHONY : MyLinkedList.c.s
 
+ProblemCreator.obj: ProblemCreator.c.obj
+
+.PHONY : ProblemCreator.obj
+
+# target to build an object file
+ProblemCreator.c.obj:
+	$(MAKE) -f CMakeFiles\Intro_Programming_Final_Project.dir\build.make CMakeFiles/Intro_Programming_Final_Project.dir/ProblemCreator.c.obj
+.PHONY : ProblemCreator.c.obj
+
+ProblemCreator.i: ProblemCreator.c.i
+
+.PHONY : ProblemCreator.i
+
+# target to preprocess a source file
+ProblemCreator.c.i:
+	$(MAKE) -f CMakeFiles\Intro_Programming_Final_Project.dir\build.make CMakeFiles/Intro_Programming_Final_Project.dir/ProblemCreator.c.i
+.PHONY : ProblemCreator.c.i
+
+ProblemCreator.s: ProblemCreator.c.s
+
+.PHONY : ProblemCreator.s
+
+# target to generate assembly for a file
+ProblemCreator.c.s:
+	$(MAKE) -f CMakeFiles\Intro_Programming_Final_Project.dir\build.make CMakeFiles/Intro_Programming_Final_Project.dir/ProblemCreator.c.s
+.PHONY : ProblemCreator.c.s
+
 main.obj: main.c.obj
 
 .PHONY : main.obj
@@ -218,6 +245,9 @@ help:
 	@echo ... MyLinkedList.obj
 	@echo ... MyLinkedList.i
 	@echo ... MyLinkedList.s
+	@echo ... ProblemCreator.obj
+	@echo ... ProblemCreator.i
+	@echo ... ProblemCreator.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

@@ -9,7 +9,13 @@ CMakeFiles/Intro_Programming_Final_Project.dir/MyLinkedList.c.obj: ../MyFile.h
 CMakeFiles/Intro_Programming_Final_Project.dir/MyLinkedList.c.obj: ../MyLinkedList.c
 CMakeFiles/Intro_Programming_Final_Project.dir/MyLinkedList.c.obj: ../MyLinkedList.h
 
+CMakeFiles/Intro_Programming_Final_Project.dir/ProblemCreator.c.obj: ../MyFile.h
+CMakeFiles/Intro_Programming_Final_Project.dir/ProblemCreator.c.obj: ../MyLinkedList.h
+CMakeFiles/Intro_Programming_Final_Project.dir/ProblemCreator.c.obj: ../ProblemCreator.c
+CMakeFiles/Intro_Programming_Final_Project.dir/ProblemCreator.c.obj: ../ProblemCreator.h
+
 CMakeFiles/Intro_Programming_Final_Project.dir/main.c.obj: ../MyFile.h
 CMakeFiles/Intro_Programming_Final_Project.dir/main.c.obj: ../MyLinkedList.h
+CMakeFiles/Intro_Programming_Final_Project.dir/main.c.obj: ../ProblemCreator.h
 CMakeFiles/Intro_Programming_Final_Project.dir/main.c.obj: ../main.c
 
