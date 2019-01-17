@@ -57,13 +57,12 @@ void print_resources() {
 void Game(struct Node *list, int *chance_sum, char *name) {
     print_resources();
     while (1) {
-
+        Check_List(&list);
         if (list == NULL) {
             list = Create_List(chance_sum);
         }
 
         struct Node *rnd = Random_Node_Finder(chance_sum, list);
-        Check_List(&list);
         struct Problem_Unit data = rnd->data;
         printf("%s", data.problem);
         printf("<<<< %s", data.choice1);
