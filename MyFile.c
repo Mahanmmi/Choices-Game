@@ -105,6 +105,7 @@ void update_leaderboard(char *name, int people, int court, int treasury) {
     tmp.usercourt = court;
     tmp.usertreasury = treasury;
     fwrite(&tmp, sizeof(struct leader_node), 1, fout);
+    fclose(fout);
 }
 
 int cmpf(const void *x, const void *y) {
@@ -132,6 +133,7 @@ void show_leaderboard() {
     for (int i = 0; i < n; i++) {
         fread(board + i, sizeof(struct leader_node), 1, fin);
     }
+    fclose(fin);
     qsort(board, n, sizeof(struct leader_node), cmpf);
 
     for (int i = n-1; i >= 0; i--) {
