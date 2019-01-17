@@ -9,11 +9,13 @@ int initialize_game() {
     printf("\t1: Start a new game\n");
     printf("\t2: Resume last saved game\n");
     printf("\t3: Tutorial\n");
-    int operation;
-    scanf("%d", &operation);
-    if (operation == 2 || operation == 1)
-        return operation;
-    if (operation == 3) {
+    printf("\t4: Show leaderboard\n");
+    char operation;
+    fflush(stdin);
+    scanf(" %c", &operation);
+    if (operation == '2' || operation == '1')
+        return operation - '0';
+    if (operation == '3') {
         FILE *tutor = Open_In_File("Game_Tutorial.txt");
         while (1) {
             if (feof(tutor))
@@ -23,6 +25,8 @@ int initialize_game() {
             printf("%s", tmp_str);
         }
         fclose(tutor);
+    } else if (operation == '4'){
+        show_leaderboard();
     } else {
         printf("Error invalid input!\n");
     }
@@ -30,9 +34,10 @@ int initialize_game() {
         printf("\tWhat do you want to do?\n");
         printf("\t1: Start a new game\n");
         printf("\t2: Resume last saved game\n");
-        scanf("%d", &operation);
-        if (operation == 2 || operation == 1)
-            return operation;
+        fflush(stdin);
+        scanf(" %c", &operation);
+        if (operation == '2' || operation == '1')
+            return operation - '0';
         printf("Error invalid input!\n");
     }
 }
@@ -58,34 +63,48 @@ void Game(struct Node *list, int *chance_sum, char *name) {
         }
 
         struct Node *rnd = Random_Node_Finder(chance_sum, list);
+        Check_List(&list);
         struct Problem_Unit data = rnd->data;
         printf("%s", data.problem);
         printf("<<<< %s", data.choice1);
         printf(">>>> %s ", data.choice2);
         while (1) {
             char op;
+            fflush(stdin);
             scanf(" %c", &op);
             if (op == '<') {
                 People += data.people1;
                 Court += data.court1;
                 Treasury += data.treasury1;
+                if(People>100)
+                    People=100;
+                if(Court>100)
+                    Court=100;
+                if(Treasury>100)
+                    Treasury=100;
                 break;
             } else if (op == '>') {
                 People += data.people2;
                 Court += data.court2;
                 Treasury += data.treasury2;
+                if(People>100)
+                    People=100;
+                if(Court>100)
+                    Court=100;
+                if(Treasury>100)
+                    Treasury=100;
                 break;
             } else if (op == 'p') {
                 printf("Game paused\n Save and exit? (Y/N)\n");
                 while (1) {
                     char save;
+                    fflush(stdin);
                     scanf(" %c", &save);
                     if (save == 'Y') {
                         Save_Game(list, *chance_sum, People, Court, Treasury, name, 0);
                         exit(0);
                     } else if (save == 'N') {
-                        printf("Game is resumed answer the problem or pause again ;)\n");
-                        break;
+                        exit(0);
                     } else {
                         printf("Error invalid input (Enter Y / N)\n");
                     }
@@ -97,10 +116,12 @@ void Game(struct Node *list, int *chance_sum, char *name) {
         }
         print_resources();
         if (check_end()) {
-            printf("Game is over too bad :(\n Do you want to save? (Y/N)");
+            update_leaderboard(name, People, Court, Treasury);
+            printf("Game is over too bad :(\n Do you want to save? (Y/N)\n");
             while (1) {
                 char save;
-                scanf("%c", &save);
+                fflush(stdin);
+                scanf(" %c", &save);
                 if (save == 'Y') {
                     Save_Game(list, *chance_sum, People, Court, Treasury, name, 1);
                     exit(0);
